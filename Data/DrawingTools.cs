@@ -13,14 +13,15 @@ namespace DrawStuff1.Data
 {
     public class DrawingTools
     {
-        Pen blackPen = new Pen(Color.Black, 3);
-        System.Drawing.SolidBrush BlackPen = new SolidBrush(Color.DarkGreen);
+        Pen blackPen = new Pen(Color.FromArgb(5, 50, 50, 50),5);
+        //System.Drawing.SolidBrush BlackPen = new SolidBrush(Color.DarkGreen);
         public void drawCircleAt(int x, int y, PaintEventArgs e)
         {
-            Rectangle circle = new Rectangle(x, y, 20, 20);
+            //y = y*(-1);
+            Rectangle circle = new Rectangle(x, y, 10, 10);
             circle.X = circle.X - circle.Width / 2;
             circle.Y = circle.Y - circle.Height / 2;
-            e.Graphics.FillEllipse(BlackPen, circle);
+            e.Graphics.DrawEllipse(blackPen, circle);
             
         }
         public void ScreenClear(PaintEventArgs e)

@@ -31,11 +31,15 @@ namespace DrawStuff1.Models
             for (int i = 0; i < PInSystem.Count(); i++)
             {
                 var currEl = PInSystem.ElementAt(i);
-                DT.drawCircleAt((int)currEl.CurrentXY.X, (int)currEl.CurrentXY.Y, e);
+                int drawX = (int)(currEl.CurrentXY.X * 100);
+                int drawY = (int)(currEl.CurrentXY.Y * 100);
+                DT.drawCircleAt(drawX, drawY, e);
                 
             }
         }
-        
+
+
+
         public PContainer(int x1, int y1, int x2, int y2)
         {
             this.x1 = x1;

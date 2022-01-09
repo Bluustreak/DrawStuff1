@@ -37,18 +37,33 @@ namespace DrawStuff1.Data
                 double hypoDist = Hypotenuse(p1, p2);
                 double absForce = ((p1.Mass * p2.Mass * Gconst) / Math.Pow(hypoDist, 2));
 
-                double AccelX = (absForce * (DiffXY(p1, p2).X / Hypotenuse(p1, p2)))/p1.Mass;
-                double AccelY = (absForce * (DiffXY(p1, p2).Y / Hypotenuse(p1, p2)))/p1.Mass;
+                double AccelX = (absForce * (DiffXY(p1, p2).X / Hypotenuse(p1, p2))) / p1.Mass;
+                double AccelY = (absForce * (DiffXY(p1, p2).Y / Hypotenuse(p1, p2))) / p1.Mass;
 
-                result = new DualVal(AccelX, AccelY);
+                result = new DualVal(AccelX * -1, AccelY * -1);
             }
-            
+            else if (type == "gravitywPushback")
+            {
+                double hypoDist = Hypotenuse(p1, p2);
+                double absForce = (p1.Mass * p2.Mass * Gconst) / (Math.Pow(hypoDist, 2));
+
+                double AccelX = ((absForce * (DiffXY(p1, p2).X / Hypotenuse(p1, p2))) / p1.Mass);
+                double AccelY = ((absForce * (DiffXY(p1, p2).Y / Hypotenuse(p1, p2))) / p1.Mass);
+
+                 absForce = (p1.Mass * p2.Mass * Gconst) / (Math.Pow(hypoDist, 5))*0.005;
+
+                AccelX += ((absForce * (-1 * DiffXY(p1, p2).X / Hypotenuse(p1, p2))) / p1.Mass);
+                AccelY += ((absForce * (-1 * DiffXY(p1, p2).Y / Hypotenuse(p1, p2))) / p1.Mass);
+
+                result = new DualVal(AccelX * -1, AccelY * -1);
+            }
+
             return result;
         }
         public static DualVal DispDueAccel(Particle p1, double TS, DualVal AccelXY)
         {            
-            double dispX = p1.speedXY.X * TS + ((1 / (double)2)) * AccelXY.X + Math.Pow(TS,2);
-            double dispY = p1.speedXY.Y * TS + ((1 / (double)2)) * AccelXY.Y + Math.Pow(TS,2);
+            double dispX = p1.speedXY.X * TS + ((1 / (double)2)) * AccelXY.X * Math.Pow(TS,2);
+            double dispY = p1.speedXY.Y * TS + ((1 / (double)2)) * AccelXY.Y * Math.Pow(TS,2);
             //s = ut + (1/2)at^2
 
             DualVal result = new DualVal(dispX, dispY);

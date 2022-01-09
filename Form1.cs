@@ -36,37 +36,46 @@ namespace DrawStuff1
 
             DualVal accXY = new DualVal(0, 0);
             //the amount of simulation ticks
-            for (int TS = 1; TS < 5; TS++)
+            for (double TS = 1; TS < 800 || true; TS+=0.01)
             {
-                accXY.X = 0;
-                accXY.Y = 0; 
+                
                 //this loop calculates all the interactions
                 foreach (Particle a in cont.PInSystem)
                 {
+                    accXY.X = 0;
+                    accXY.Y = 0;
+                    bool ShouldCalculate = false;
                     foreach (Particle b in cont.PInSystem) // this loop checks the acceleration strength to/from all the other partciles and sums it
                     {
                         if (a!=b)
                         {
-                            var temp = CustomMaths.CalcAccelXY(a, b, "gravity");
+                            ShouldCalculate = true;
+                            var temp = CustomMaths.CalcAccelXY(a, b, "gravitywPushback");
                             accXY.X += temp.X;
                             accXY.Y += temp.Y;
+                            
+
                         }
+                        //Console.WriteLine(accXY.X+" "+accXY.Y);
                     }
+                    if(ShouldCalculate)
+                    {
+                        DualVal XYdisp = CustomMaths.DispDueAccel(a, TS, accXY);
+                        //Console.WriteLine("current particle XY:" + a.CurrentXY.X + " " + a.CurrentXY.Y + "with disp towards XY: " + XYdisp.X + " " + XYdisp.Y);
 
-                    DualVal XYdisp = CustomMaths.DispDueAccel(a,TS,accXY);
-                    a.CurrentXY.X+=XYdisp.X;
-                    a.CurrentXY.Y+=XYdisp.Y;
-                    a.speedXY.X+=XYdisp.X/TS;
-                    a.speedXY.Y+=XYdisp.Y/TS;
-                    System.Threading.Thread.Sleep(1000);
-                    Console.WriteLine(a.speedXY.X);
+                        a.CurrentXY.X += XYdisp.X;
+                        a.CurrentXY.Y += XYdisp.Y;
+                        a.speedXY.X = XYdisp.X / TS;
+                        a.speedXY.Y = XYdisp.Y / TS;
+                        
 
+                    }
                 }
 
                 // and this updates the view
 
-
-                DT.ScreenClear(e);
+                //System.Threading.Thread.Sleep(1);
+                //DT.ScreenClear(e);
                 cont.drawContents(e);
             }
             //---the simulation loop---//

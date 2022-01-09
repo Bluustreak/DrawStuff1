@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.31912.275
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DrawStuff1", "DrawStuff1.csproj", "{EFCD50DD-FDA9-4184-8DC3-A9286FD50C6B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DrawStuffUnitTests", "..\DrawStuffUnitTests\DrawStuffUnitTests.csproj", "{7A8DD9B0-6703-4705-BA1A-A6F9AE15194F}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{EFCD50DD-FDA9-4184-8DC3-A9286FD50C6B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EFCD50DD-FDA9-4184-8DC3-A9286FD50C6B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EFCD50DD-FDA9-4184-8DC3-A9286FD50C6B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EFCD50DD-FDA9-4184-8DC3-A9286FD50C6B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7A8DD9B0-6703-4705-BA1A-A6F9AE15194F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7A8DD9B0-6703-4705-BA1A-A6F9AE15194F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7A8DD9B0-6703-4705-BA1A-A6F9AE15194F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7A8DD9B0-6703-4705-BA1A-A6F9AE15194F}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {10DE2F2E-E965-483E-BBD0-D4B3376BE573}
+	EndGlobalSection
+EndGlobal

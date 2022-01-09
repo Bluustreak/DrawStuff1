@@ -22,20 +22,25 @@ namespace DrawStuff1.Models
 
         public List<Particle> PInSystem { get; set; }
 
-        
-        Pen blackPen = new Pen(Color.Black, 3);
-        System.Drawing.SolidBrush BlackPen = new SolidBrush(Color.Black);
+       
+        DrawingTools DT = new DrawingTools();
         public void drawContents(PaintEventArgs e)
-        {
-            DrawingTools DT = new DrawingTools();
+        {            
             for (int i = 0; i < PInSystem.Count(); i++)
             {
                 var currEl = PInSystem.ElementAt(i);
                 int drawX = (int)(currEl.CurrentXY.X * 100);
                 int drawY = (int)(currEl.CurrentXY.Y * 100);
-                DT.drawCircleAt(drawX, drawY, e);
+                DT.drawCircleAt(drawX, drawY, e, (int)currEl.Radius, (float)currEl.Mass);
                 
             }
+        }
+        public void DrawBoundry(PaintEventArgs e)
+        {
+            Pen linePen = new Pen(Color.Black, 3);
+            int s = 100;
+            
+            e.Graphics.DrawRectangle(linePen, x1*s,(x2 - x1) * s, y1 * s, (y2 - y1) * s);
         }
 
 

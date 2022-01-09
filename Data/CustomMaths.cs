@@ -36,7 +36,6 @@ namespace DrawStuff1.Data
             {
                 double hypoDist = Hypotenuse(p1, p2);
                 double absForce = ((p1.Mass * p2.Mass * Gconst) / Math.Pow(hypoDist, 2));
-
                 double AccelX = (absForce * (DiffXY(p1, p2).X / Hypotenuse(p1, p2))) / p1.Mass;
                 double AccelY = (absForce * (DiffXY(p1, p2).Y / Hypotenuse(p1, p2))) / p1.Mass;
 
@@ -46,16 +45,41 @@ namespace DrawStuff1.Data
             {
                 double hypoDist = Hypotenuse(p1, p2);
                 double absForce = (p1.Mass * p2.Mass * Gconst) / (Math.Pow(hypoDist, 2));
-
                 double AccelX = ((absForce * (DiffXY(p1, p2).X / Hypotenuse(p1, p2))) / p1.Mass);
                 double AccelY = ((absForce * (DiffXY(p1, p2).Y / Hypotenuse(p1, p2))) / p1.Mass);
 
-                 absForce = (p1.Mass * p2.Mass * Gconst) / (Math.Pow(hypoDist, 5))*0.005;
-
+                absForce = (p1.Mass * p2.Mass * Gconst) / (Math.Pow(hypoDist, 5)) * 0.0005;
                 AccelX += ((absForce * (-1 * DiffXY(p1, p2).X / Hypotenuse(p1, p2))) / p1.Mass);
                 AccelY += ((absForce * (-1 * DiffXY(p1, p2).Y / Hypotenuse(p1, p2))) / p1.Mass);
 
                 result = new DualVal(AccelX * -1, AccelY * -1);
+            }
+            else if (type == "gravitywCollission")
+            {
+                double hypoDist = Hypotenuse(p1, p2);
+                double absForce = (p1.Mass * p2.Mass * Gconst) / (Math.Pow(hypoDist, 2));
+                double AccelX = ((absForce * (DiffXY(p1, p2).X / Hypotenuse(p1, p2))) / p1.Mass);
+                double AccelY = ((absForce * (DiffXY(p1, p2).Y / Hypotenuse(p1, p2))) / p1.Mass);
+
+                if (CustomMaths.Hypotenuse(p1,p2) < (p1.Radius+p2.Radius)*.008)
+                {
+                    //Console.WriteLine("collission!");
+                    absForce = (p1.Mass * p2.Mass * Gconst) / (Math.Pow(hypoDist, 6));
+                    AccelX += ((absForce * (-1 * DiffXY(p1, p2).X / Hypotenuse(p1, p2))) / p1.Mass);
+                    AccelY += ((absForce * (-1 * DiffXY(p1, p2).Y / Hypotenuse(p1, p2))) / p1.Mass);
+
+
+                }
+                result = new DualVal(AccelX * -1, AccelY * -1);
+            }
+            else if (type == "antiGravity")
+            {
+                double hypoDist = Hypotenuse(p1, p2);
+                double absForce = ((p1.Mass * p2.Mass * Gconst) / Math.Pow(hypoDist, 7));
+                double AccelX = (absForce * (DiffXY(p1, p2).X / Hypotenuse(p1, p2))) / p1.Mass;
+                double AccelY = (absForce * (DiffXY(p1, p2).Y / Hypotenuse(p1, p2))) / p1.Mass;
+
+                result = new DualVal(AccelX * 1, AccelY * 1);
             }
 
             return result;

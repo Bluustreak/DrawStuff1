@@ -29,14 +29,17 @@ namespace DrawStuff1
             Initialize init = new Initialize();
             PContainer cont = init.InitPinContainer();
             cont.drawContents(e);
-
             DrawingTools DT = new DrawingTools();
+            cont.DrawBoundry(e);
 
-            //---the simulation loop---//
+//---the simulation loop---//
 
-            DualVal accXY = new DualVal(0, 0);
+DualVal accXY = new DualVal(0, 0);
+            byte drag = 0;
             //the amount of simulation ticks
-            for (double TS = 1; TS < 800 || true; TS+=0.01)
+            double TS = 100;
+            int counter = 0;
+            while(true)
             {
                 
                 //this loop calculates all the interactions
@@ -60,22 +63,53 @@ namespace DrawStuff1
                     }
                     if(ShouldCalculate)
                     {
+                        counter++;
                         DualVal XYdisp = CustomMaths.DispDueAccel(a, TS, accXY);
                         //Console.WriteLine("current particle XY:" + a.CurrentXY.X + " " + a.CurrentXY.Y + "with disp towards XY: " + XYdisp.X + " " + XYdisp.Y);
 
                         a.CurrentXY.X += XYdisp.X;
                         a.CurrentXY.Y += XYdisp.Y;
-                        a.speedXY.X = XYdisp.X / TS;
-                        a.speedXY.Y = XYdisp.Y / TS;
-                        
+                        a.speedXY.X = (XYdisp.X / TS) - drag * (Math.Sign(XYdisp.X) * 1 * Math.Pow(a.speedXY.X, 2));
+                        a.speedXY.Y = (XYdisp.Y / TS) - drag * (Math.Sign(XYdisp.Y) * 1 * Math.Pow(a.speedXY.Y, 2));
+                    }
 
+                    if (true) // if the sim should be ran inside a boundary box
+                    {
+                        // when colliding with a wall, the particle looses some% of its speed
+                        double dampening = 0.7;
+                        if (a.CurrentXY.X < cont.x1)
+                        {
+                            a.speedXY.X *= -dampening;
+                            a.CurrentXY.X = cont.x1;
+                        }
+                        else if (a.CurrentXY.X > cont.x2)
+                        {
+                            a.speedXY.X *= -dampening;
+                            a.CurrentXY.X = cont.x2;
+                        }
+
+                        if (a.CurrentXY.Y < cont.y1)
+                        {
+                            a.speedXY.Y *= -dampening;
+                            a.CurrentXY.Y = cont.y1;
+                        }
+                        else if (a.CurrentXY.Y > cont.y2)
+                        {
+                            a.speedXY.Y *= -dampening;
+                            a.CurrentXY.Y = cont.y2;
+                        }
                     }
                 }
 
                 // and this updates the view
 
                 //System.Threading.Thread.Sleep(1);
-                //DT.ScreenClear(e);
+                //if (counter>10000)
+                //{
+                //    counter = 0;
+                //    DT.ScreenClear(e);
+                //}
+                    
                 cont.drawContents(e);
             }
             //---the simulation loop---//

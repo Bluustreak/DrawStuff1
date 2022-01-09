@@ -10,7 +10,7 @@ namespace DrawStuff1.Models
     {
         public DualVal CurrentXY { get; set; }
         public int Mass { get; set; }
-        public double Radius { get; set; }
+        public float Radius { get; set; }
         public DualVal speedXY { get; set; }
 
         List<DualVal> DualValdinateHistory = new List<DualVal>();  
@@ -21,8 +21,10 @@ namespace DrawStuff1.Models
             CurrentXY = new DualVal(x, y);
             DualValdinateHistory.Add(CurrentXY);    
             Mass = mass;
-            Radius = Math.Pow(mass / (4 / 3) / Math.PI, -3); 
+            Radius = (float)Math.Pow(mass, 1/3F);
             // the sphere volume formula is used to extract the radius. mass is assumed to be volume.
+            //mass/density=4/3 * pi * r^3
+            //mass/density=4/3 * pi * r^3
             speedXY = sXY;
         }
     }

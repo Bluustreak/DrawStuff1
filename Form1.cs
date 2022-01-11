@@ -38,8 +38,7 @@ DualVal accXY = new DualVal(0, 0);
             byte drag = 0;
             //the amount of simulation ticks
             double TS = 100;
-            int counter = 0;
-            while(true)
+            for(int counter = 0; counter <100000; counter ++)
             {
                 
                 //this loop calculates all the interactions
